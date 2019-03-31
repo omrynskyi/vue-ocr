@@ -1,66 +1,52 @@
 <template>
-  <v-app id="inspire" light>
-    <v-toolbar app fixed clipped-left style="padding-top: 20px">
-      <v-toolbar-title>Text Analyser</v-toolbar-title>
-      <v-spacer></v-spacer>
-
-      <v-btn icon @click="reset">
-        <v-icon>refresh</v-icon>
-      </v-btn>
-      <button v-on:click="counter += 1">Reset</button>
-    </v-toolbar>
-
-    <v-content>
-      <button v-on:click="resetClick()">Reset</button>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <div class="container" v-if="isInitial">
-            <form enctype="multipart/form-data" novalidate>
-              <h1>Upload image</h1>
-              <div class="dropbox">
-                <input
-                  type="file"
-                  :name="'document'"
-                  :disabled="isSaving"
-                  @change="filesChange($event.target.files);"
-                  accept="image/*"
-                  class="input-file"
-                >
-                <p v-if="isInitial">
-                  Drag and Drop
-                  <br>or click to browse
-                </p>
-              </div>
-            </form>
+  <v-container fluid fill-height>
+    <v-layout justify-center align-center>
+      <div class="container" v-if="isInitial">
+        <form enctype="multipart/form-data" novalidate>
+          <h1>Upload image</h1>
+          <div class="dropbox">
+            <input
+              type="file"
+              :name="'document'"
+              :disabled="isSaving"
+              @change="filesChange($event.target.files);"
+              accept="image/*"
+              class="input-file"
+            >
+            <p v-if="isInitial">
+              Drag and Drop
+              <br>or click to browse
+            </p>
           </div>
-          <div class="container text-xs-center" v-if="isSaving">
-            <v-progress-circular
-              v-bind:size="200"
-              v-bind:width="15"
-              v-bind:rotate="-90"
-              v-bind:value="(status.progress * 100)"
-              color="primary"
-            >{{progress}} %</v-progress-circular>
-            <h2>{{status.status}}</h2>
-          </div>
-          <v-layout row wrap v-if="isSuccess || isFailed">
-            <v-flex xs12>
-              <v-divider></v-divider>
-              <v-text-field
-                label="Result"
-                v-model="status.text"
-                counter
-                full-width
-                multi-line
-                single-line
-                :auto-grow="true"
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
+        </form>
+      </div>
+      <div class="container text-xs-center" v-if="isSaving">
+        <v-progress-circular
+          v-bind:size="200"
+          v-bind:width="15"
+          v-bind:rotate="-90"
+          v-bind:value="(status.progress * 100)"
+          color="primary"
+        >{{progress}} %</v-progress-circular>
+        <h2>{{status.status}}</h2>
+      </div>
+      <v-layout row wrap v-if="isSuccess || isFailed">
+        <v-flex xs12>
+          <v-divider></v-divider>
+          <v-btn v-on:click="resetClick()">Reset</v-btn>
+          <v-text-field
+            label="Result"
+            v-model="status.text"
+            counter
+            full-width
+            multi-line
+            single-line
+            :auto-grow="true"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
