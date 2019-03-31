@@ -33,6 +33,7 @@
       <v-layout row wrap v-if="isSuccess || isFailed">
         <v-flex xs12>
           <v-divider></v-divider>
+          <v-btn v-on:click="resetClick()">Reset</v-btn>
           <v-text-field
             label="Result"
             v-model="status.text"
